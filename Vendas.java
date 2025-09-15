@@ -30,13 +30,23 @@ public class Vendas {
                     break;
                 case 3:
                     tipoAplicado = "Promocional";
-                    valorTotal = quantidade * (precoBase * 0.7);
+                    valorTotal = quantidade * (precoBase * 0.4);
                     break;
                 default:
-                    tipoAplicado = "Inteira";
+                    tipoAplicado = "Desconhecido";
                     valorTotal = quantidade * precoBase;
+                    break;
             }
         }
+    }
+
+    public void aplicarDesconto(double desconto) {
+        valorTotal -= desconto;
+        if (valorTotal < 0) valorTotal = 0;
+    }
+
+    public void somarValor(double valorExtra) {
+        valorTotal += valorExtra;
     }
 
     public int getQuantidade() {
@@ -49,9 +59,5 @@ public class Vendas {
 
     public double getValorTotal() {
         return valorTotal;
-    }
-
-    public boolean isGratuito() {
-        return idadeCliente < 5;
     }
 }

@@ -1,40 +1,34 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Bilheteria {
-    private int totalIngressos = 0;
-    private int totalInteira = 0;
-    private int totalMeia = 0;
-    private int totalPromocional = 0;
-    private int totalGratuito = 0;
-    private double totalArrecadado = 0.0;
+    private List<Vendas> vendasRealizadas;
+
+    public Bilheteria() {
+        vendasRealizadas = new ArrayList<>();
+    }
 
     public void registrarVenda(Vendas venda) {
-        totalIngressos += venda.getQuantidade();
-
-        switch (venda.getTipoAplicado()) {
-            case "Inteira":
-                totalInteira += venda.getQuantidade();
-                totalArrecadado += venda.getValorTotal();
-                break;
-            case "Meia-Entrada":
-                totalMeia += venda.getQuantidade();
-                totalArrecadado += venda.getValorTotal();
-                break;
-            case "Promocional":
-                totalPromocional += venda.getQuantidade();
-                totalArrecadado += venda.getValorTotal();
-                break;
-            case "Grátis":
-                totalGratuito += venda.getQuantidade();
-                break;
-        }
+        vendasRealizadas.add(venda);
     }
 
     public void exibirRelatorioFinal() {
-        System.out.println("\nRELATÓRIO FINAL DE VENDAS No Expediente");
-        System.out.println("Total de ingressos vendidos: " + totalIngressos);
-        System.out.println("Inteira: " + totalInteira);
-        System.out.println("Meia-Entrada: " + totalMeia);
-        System.out.println("Promocional: " + totalPromocional);
-        System.out.println("Gratuitos: " + totalGratuito);
+        System.out.println("\nRelatório Final da Bilheteria.");
+        if (vendasRealizadas.isEmpty()) {
+            System.out.println("Nenhuma venda realizada.");
+            return;
+        }
+        double totalArrecadado = 0.0;
+        int totalIngressosVendidos = 0;
+
+        for (Vendas venda : vendasRealizadas) {
+            System.out.printf("Venda: %d ingressos, Tipo: %s, Valor: R$ %.2f\n",
+                    venda.getQuantidade(), venda.getTipoAplicado(), venda.getValorTotal());
+            totalArrecadado += venda.getValorTotal();
+            totalIngressosVendidos += venda.getQuantidade();
+        }
+
+        System.out.printf("Total de ingressos vendidos: %d\n", totalIngressosVendidos);
         System.out.printf("Total arrecadado: R$ %.2f\n", totalArrecadado);
     }
 }
